@@ -6,9 +6,19 @@ using TMPro;
 //This script is based on Kemble Software's "Custom text effects in Unity with TextMeshPro, in like 130 seconds!" tutorial https://www.youtube.com/watch?v=FXMqUdP3XcE
 //Expanded it adding premade effects that can be toggled in the inspector
 
+public enum TextAnimationTypes
+{
+    NoAnimation, SineWave, Jiggle, ZoomIn, ZoomOut, CharacterJump, TextJump, Spin
+}
+
 public class Text_Effects_CreativenChaotic : MonoBehaviour
 {
+
     [SerializeField] TMP_Text textToAnimate;
+    [SerializeField] TextAnimationTypes howToAnimate;
+
+    //TODO: EXPAND LATER WITH A MAP WHERE EACH WORD GETS AUTOMATICALLY ADDED AND YOU CAN CHOOSE AN ANIMATION PER WORD OR TEXT
+    //OR ADD A VECTOR WHERE WORDS CAN BE ADDED WITH MATCHING ANIMATIONS IN THE INSPECTOR TO ADD WHAT WORDS TO ANIMATE AS NEEDED
 
     /// <summary>
     /// TextMeshPro creates a mesh per character. We modify those meshes.
@@ -42,7 +52,27 @@ public class Text_Effects_CreativenChaotic : MonoBehaviour
                 var originalVert = vertices[characterInfo.vertexIndex + vert];
 
                 //We now modify the vertices to create the effect
-                vertices[characterInfo.vertexIndex + vert] = originalVert + new Vector3(0, Mathf.Sin(Time.time * 2.0f + originalVert.x * 0.01f) * 10.0f, 0);
+                switch (howToAnimate)
+                {
+                    case TextAnimationTypes.NoAnimation:
+                        //Do nothing
+                        break;
+                    case TextAnimationTypes.SineWave:
+                        vertices[characterInfo.vertexIndex + vert] = originalVert + new Vector3(0, Mathf.Sin(Time.time * 2.0f + originalVert.x * 0.01f) * 10.0f, 0);
+                        break;
+                    case TextAnimationTypes.CharacterJump:
+                        break;
+                    case TextAnimationTypes.TextJump:
+                        break;
+                    case TextAnimationTypes.Jiggle:
+                        break;
+                    case TextAnimationTypes.ZoomOut:
+                        break;
+                    case TextAnimationTypes.ZoomIn:
+                        break;
+                }
+                
+                
             }
         }
 
